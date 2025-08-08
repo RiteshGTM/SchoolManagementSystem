@@ -22,7 +22,7 @@ namespace SchoolManagementSystem.API.Controllers
             return Ok(students);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{studentId}")]
         public async Task<IActionResult> GetStudentById(Guid studentId)
         {
             var student = await studentService.GetStudentById(studentId);
@@ -38,7 +38,7 @@ namespace SchoolManagementSystem.API.Controllers
             // CreatedAtAction = “I’ve created something, and here’s where you can find it.”
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{studentId}")]
         public async Task<IActionResult> UpdateStudent(Guid studentId ,Student student)
         {
             if (studentId != student.StudentId) return BadRequest();
@@ -46,7 +46,7 @@ namespace SchoolManagementSystem.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{studentId}")]
         public async Task<IActionResult> DeleteStudent(Guid studentId)
         {
             await studentService.DeleteStudent(studentId);
