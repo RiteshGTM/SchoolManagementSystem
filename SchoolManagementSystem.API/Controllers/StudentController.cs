@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SchoolManagementSystem.API.Interfaces;
 using SchoolManagementSystem.API.Models;
 
 namespace SchoolManagementSystem.API.Controllers
 {
+    [Authorize] // any logged-in user
     [Route("api/[controller]")]
     [ApiController]
     public class StudentController : ControllerBase
@@ -46,6 +48,7 @@ namespace SchoolManagementSystem.API.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin")] // only Admin role
         [HttpDelete("{studentId}")]
         public async Task<IActionResult> DeleteStudent(Guid studentId)
         {

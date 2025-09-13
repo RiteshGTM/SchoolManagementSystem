@@ -90,10 +90,10 @@ namespace SchoolManagementSystem.API.Models
         [Display(Name = "Created At", Description = "Created At")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        [Required]
+        //[Required]
         [Column("UpdatedAt", TypeName = "DATETIME2")]
         [DataType(DataType.DateTime)]
         [Display(Name = "Updated At", Description = "Updated At")]
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow;
     }
 }
