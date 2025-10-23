@@ -75,7 +75,8 @@ builder.Services.AddCors(corsOptions =>
 {
     corsOptions.AddPolicy("SMSCors", builder =>
     {
-        builder.AllowAnyOrigin();
+        //builder.AllowAnyOrigin();
+        builder.WithOrigins("https://localhost:5085");
         builder.AllowAnyMethod();
         builder.AllowAnyHeader();
         builder.SetPreflightMaxAge(TimeSpan.FromSeconds(324));
