@@ -1,124 +1,151 @@
-# School Management System
+# School Management System API 🏫
 
-A full-stack School Management System application built with a .NET 9 API backend and an Angular frontend. This system provides functionalities for managing school-related data, including students and staff, with a robust JWT-based authentication system.
+This project is an ASP.NET Core Web API designed to manage school-related data, including students, persons, users, and roles. It provides a RESTful interface for performing CRUD (Create, Read, Update, Delete) operations on these entities. The API uses Entity Framework Core for database interactions and JWT (JSON Web Tokens) for authentication and authorization.
 
-## About The Project
+## 🚀 Key Features
 
-This project is a comprehensive solution for school administration. It is divided into two main parts:
+- **User Authentication and Authorization:** Secure user management with registration, login, and role-based access control using JWT.
+- **CRUD Operations for Students:** API endpoints for creating, reading, updating, and deleting student records.
+- **CRUD Operations for Persons:** API endpoints for managing personal information, shared across students, teachers, and staff.
+- **Database Management:** Utilizes Entity Framework Core for seamless database interactions.
+- **Token Refreshing:** Implements refresh token mechanism for maintaining user sessions securely.
+- **Asynchronous Operations:** Leverages `async` and `await` for non-blocking database operations, improving performance.
+- **API Documentation:** Includes Swagger/OpenAPI for easy API exploration and testing.
 
-*   **`SchoolManagementSystem.API`**: A RESTful API built with ASP.NET Core 9 that handles all business logic and data persistence. It uses Entity Framework Core to interact with a SQL Server database.
-*   **`SchoolManagementSystem.UI`**: A single-page application built with Angular that provides the user interface for interacting with the API.
+## 🛠️ Tech Stack
 
-### Key Features
+- **Backend:**
+    - ASP.NET Core Web API
+    - .NET 9
+- **Database:**
+    - Entity Framework Core
+- **Authentication:**
+    - JWT (JSON Web Tokens)
+    - Microsoft.AspNetCore.Authentication.JwtBearer
+- **Security:**
+    - BCrypt.Net (for password hashing)
+- **API Documentation:**
+    - Swagger/OpenAPI
 
-*   **User Authentication**: Secure user registration and login using JSON Web Tokens (JWT).
-*   **Token Management**: Support for access and refresh tokens, including token refresh and revocation.
-*   **Role-Based Access Control**: Differentiated permissions for users, such as `Admin` and `Student` roles. For example, deleting a student is restricted to Admins.
-*   **Student Management**: Full CRUD (Create, Read, Update, Delete) operations for student records.
-*   **Person Management**: CRUD operations for personal information, forming the base for students, teachers, and parents.
-*   **Structured Database**: A well-defined database schema using Entity Framework Core migrations, including tables for users, roles, students, teachers, classes, and more.
+## 📦 Getting Started
 
-### Built With
-
-**Backend**
-*   .NET 9
-*   ASP.NET Core Web API
-*   Entity Framework Core 9
-*   SQL Server
-*   BCrypt.Net (for password hashing)
-*   JWT Bearer Authentication
-
-**Frontend**
-*   Angular
-*   TypeScript
-*   RxJS
-
-## Getting Started
-
-To get a local copy up and running, follow these steps.
+Follow these instructions to get the project up and running on your local machine.
 
 ### Prerequisites
 
-*   [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
-*   [Node.js and npm](https://nodejs.org/en/)
-*   [Angular CLI](https://angular.dev/tools/cli)
-*   SQL Server (e.g., [SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-downloads))
-*   A code editor like [Visual Studio](https://visualstudio.microsoft.com/) or [VS Code](https://code.visualstudio.com/)
+- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+- An IDE such as Visual Studio or Visual Studio Code
+- A database system (e.g., SQL Server)
 
 ### Installation
 
-1.  **Clone the repository:**
-    ```sh
-    git clone https://github.com/riteshgtm/schoolmanagementsystem.git
-    cd schoolmanagementsystem
+1.  Clone the repository:
+
+    ```bash
+    git clone https://github.com/RiteshGTM/SchoolManagementSystem/
     ```
 
-2.  **Set up the Backend (API):**
-    *   Navigate to the API project directory:
-        ```sh
-        cd SchoolManagementSystem.API
-        ```
-    *   Create or update `appsettings.Development.json` and add your SQL Server connection string:
-        ```json
-        {
-          "ConnectionStrings": {
-            "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=SchoolDb;Trusted_Connection=True;MultipleActiveResultSets=true;Encrypt=False"
-          }
-        }
-        ```
-    *   Install the Entity Framework Core tools if you haven't already:
-        ```sh
-        dotnet tool install --global dotnet-ef
-        ```
-    *   Apply the database migrations to create the schema:
-        ```sh
-        dotnet ef database update
-        ```
-    *   Run the API. It will be available at `http://localhost:5085`.
-        ```sh
-        dotnet run
-        ```
+2.  Navigate to the API project directory:
 
-3.  **Set up the Frontend (UI):**
-    *   In a new terminal, navigate to the UI project directory:
-        ```sh
-        cd SchoolManagementSystem.UI
-        ```
-    *   Install the required npm packages:
-        ```sh
-        npm install
-        ```
-    *   Run the Angular development server. The application will be available at `http://localhost:4200`.
-        ```sh
-        ng serve
-        ```
-    *   The UI is configured in `src/environments/environment.ts` to connect to the API at `http://localhost:5085/api`.
+    ```bash
+    cd SchoolManagementSystem
+    cd SchoolManagementSystem.API
+    ```
 
+3.  Update the database connection string in `appsettings.json` with your database credentials.
 
-## API Endpoints
+    ```json
+    {
+      "ConnectionStrings": {
+        "DefaultConnection": "Server=your_server;Database=School;User Id=your_user_id;Password=your_password;"
+      },
+      "JwtSettings": {
+        "Issuer": "your_issuer",
+        "Audience": "your_audience",
+        "SecretKey": "your_secret_key",
+        "ExpiryMinutes": 60
+      }
+    }
+    ```
 
-The following are the main endpoints provided by the `SchoolManagementSystem.API`.
+4.  Apply database migrations:
 
-### Auth Controller (`/api/auth`)
+    ```bash
+    dotnet ef database update
+    ```
 
-*   `POST /register` - Registers a new user.
-*   `POST /login` - Authenticates a user and returns JWT access and refresh tokens.
-*   `POST /refresh` - Generates a new access token using a valid refresh token.
-*   `POST /revoke` - Revokes a user's refresh token.
+### Running Locally
 
-### Student Controller (`/api/student`)
-_Requires authentication for all endpoints._
+1.  Build the project:
 
-*   `GET /` - Retrieves a list of all students.
-*   `GET /{studentId}` - Retrieves a single student by their ID.
-*   `POST /` - Adds a new student to the database.
-*   `PUT /{studentId}` - Updates an existing student's information.
-*   `DELETE /{studentId}` - Deletes a student. (Requires 'Admin' role).
+    ```bash
+    dotnet build
+    ```
 
-### Person Controller (`/api/person`)
+2.  Run the project:
 
-*   `GET /` - Retrieves a list of all people.
-*   `GET /{personId}` - Retrieves a single person by their ID.
-*   `POST /` - Adds a new person to the database.
-*   `PUT /{personId}` - Updates an existing person's information.
-*   `DELETE /{personId}` - Deletes a person.
+    ```bash
+    dotnet run
+    ```
+
+3.  Open your browser and navigate to `https://localhost:<port>/swagger` to access the Swagger UI and test the API endpoints. Replace `<port>` with the port number your application is running on (typically 5085 for HTTP).
+
+## 📂 Project Structure
+
+```
+SchoolManagementSystem.API/
+├── Controllers/
+│   ├── AuthController.cs
+│   ├── PersonController.cs
+│   └── StudentController.cs
+├── Data/
+│   └── SchoolDbContext.cs
+├── Models/
+│   ├── Auth/
+│   │   ├── RefreshToken.cs
+│   │   ├── Role.cs
+│   │   ├── User.cs
+│   │   └── UserRole.cs
+│   ├── Person.cs
+│   └── Student.cs
+├── DTOs/
+│   ├── LoginRequest.cs
+│   └── RegisterRequest.cs
+├── Interfaces/
+│   ├── IAuthService.cs
+│   ├── IPersonRepository.cs
+│   ├── IPersonService.cs
+│   ├── IStudentRepository.cs
+│   ├── IStudentService.cs
+│   ├── IUserRepository.cs
+│   └── IJwtTokenService.cs
+├── Repositories/
+│   ├── PersonRepository.cs
+│   └── StudentRepository.cs
+├── Services/
+│   ├── AuthService.cs
+│   ├── PersonService.cs
+│   ├── StudentService.cs
+│   └── JwtTokenService.cs
+├── appsettings.json
+├── Program.cs
+└── SchoolManagementSystem.API.csproj
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1.  Fork the repository.
+2.  Create a new branch for your feature or bug fix.
+3.  Make your changes and commit them with descriptive messages.
+4.  Push your changes to your fork.
+5.  Submit a pull request to the main repository.
+
+## 📬 Contact
+
+For questions or feedback, please contact: Ritesh - ritesh.gtmcs@gmail.com
+
+## 💖 Thanks
+
+Thank you for checking out the School Management System API! We hope it's helpful for your projects.
